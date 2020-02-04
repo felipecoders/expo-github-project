@@ -53,7 +53,7 @@ export default function Main({ navigation }) {
   useEffect(() => {
     async function loadUsers() {
       const savedUsers = await AsyncStorage.getItem('users');
-      setUsers(JSON.parse(savedUsers));
+      setUsers(JSON.parse(savedUsers) || []);
     }
 
     loadUsers();
