@@ -55,7 +55,7 @@ export const List = styled.View`
   padding: 8px 0;
 `;
 
-//#region Tarefa
+//#region Tarefa "mensagens de erro"
 export const FormErrorMessage = styled.Text`
   color: #fff;
   font-weight: bold;

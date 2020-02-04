@@ -13,7 +13,7 @@ import {
   FormButton,
   FormButtonText,
   List,
-  //#region tarefa
+  //#region tarefa "mensagens de erro"
   FormErrorMessage,
   //#endregion
 } from './styles';
@@ -25,7 +25,7 @@ import UserItem from '../../components/UserItem';
 export default function Main({ navigation }) {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState('');
-  //#region Tarefa
+  //#region tarefa "mensagens de erro"
   const [error, serError] = useState(null);
   //#endregion
 
@@ -35,11 +35,11 @@ export default function Main({ navigation }) {
 
       setUsers([...users, data]);
       setName('');
-      //#region tarefa
+      //#region tarefa "mensagens de erro"
       serError(null);
       //#endregion
     } catch (e) {
-      //#region tarefa
+      //#region tarefa "mensagens de erro"
       serError(`* User ${name} cannot be found!`);
       //#endregion
     }
@@ -49,7 +49,7 @@ export default function Main({ navigation }) {
     navigation.navigate('Repository', { user });
   }
 
-  //#region Tarefa
+  //#region Tarefa "buscar os usuarios dos dados offlines"
   useEffect(() => {
     async function loadUsers() {
       const savedUsers = await AsyncStorage.getItem('users');
@@ -58,7 +58,8 @@ export default function Main({ navigation }) {
 
     loadUsers();
   }, []);
-
+  //#endregion
+  //#region tarefa "Salvar nos dados offlines os usuarios"
   useEffect(() => {
     async function addUser() {
       await AsyncStorage.setItem('users', JSON.stringify(users));

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
-  //#region tarefa
+  //#region tarefa 
   AsyncStorage,
   ActivityIndicator
   //#endregion
@@ -13,7 +13,7 @@ import {
   BackButton,
   BackButtonText,
   List,
-  //#region tarefa
+  //#region tarefa loading
   LoadingContainer,
   //#endregion
 } from './styles';
@@ -25,8 +25,10 @@ import api from '../../services/api';
 export default function Repository({ navigation }) {
   const user = navigation.getParam('user');
   const [repos, setRepos] = useState([]);
-  //#region tarefa
+  //#region tarefa loading 
   const [loading, setLoading] = useState(true);
+  //#endregion
+  //#region tarefa favoritar os repositórios
   const [favorites, setFavorites] = useState([]);
 
   async function loadFavorites() {
@@ -39,7 +41,7 @@ export default function Repository({ navigation }) {
   async function loadRepositories() {
     if (user.public_repos === repos.length) return;
 
-    //#region tarefa
+    //#region tarefa loading
     setLoading(true);
     //#endregion
 
@@ -59,19 +61,19 @@ export default function Repository({ navigation }) {
     }));
 
     setRepos([...repos, ...repositories]);
-    //#region tarefa
+    //#region tarefa loading
     setLoading(false);
     //#endregion
   }
 
   useEffect(() => {
     loadRepositories();
-    //#region tarefa
+    //#region tarefa "buscar os usuarios dos dados offlines"
     loadFavorites();
     //#endregion
   }, []);
 
-  //#region tarefa
+  //#region tarefa "Salvar nos dados offlines os usuarios"
   useEffect(() => {
     async function updateFavorites() {
       await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
@@ -90,7 +92,7 @@ export default function Repository({ navigation }) {
     await WebBrowser.openBrowserAsync(url);
   }
 
-  //#region tarefa
+  //#region tarefa "favoritar os repositórios"
   async function handlerFavorite(id) {
     if (favorites.includes(id)) {
       const newFavorites = favorites.filter(favorite => favorite !== id);
@@ -99,7 +101,9 @@ export default function Repository({ navigation }) {
       setFavorites([ ...favorites, id ]);
     }
   }
+  //#endregion
 
+  //#region tarefa "loading no FlatList da tela Repository"
   function Footer() {
     if (!loading) return null;
 
@@ -131,13 +135,15 @@ export default function Repository({ navigation }) {
               <RepositoryItem
                 data={item}
                 onPress={openViewer}
-                //#region tarefa
+                //#region tarefa "criar icone para favoritar"
                 isFavorite={favorites.includes(item.id)}
+                //#endregion
+                //#region tarefa "favoritar os repositórios"
                 onHandlerFavorite={handlerFavorite}
                 //#endregion
               />
             )}
-            //#region tarefa
+            //#region tarefa "loading no FlatList da tela Repository"
             ListFooterComponent={() => <Footer/>}
             //#endregion
           />

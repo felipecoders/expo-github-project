@@ -6,8 +6,10 @@ import { Container, Name, Description, Informations, Button, ButtonText } from '
 export default function RepositoryItem({
   data,
   onPress,
-  //#region tarefa
+  //#region tarefa "criar icone para favoritar"
   isFavorite,
+  //#endregion
+  //#region tarefa "favoritar os repositórios"
   onHandlerFavorite
   //#endregion
 }) {
@@ -20,7 +22,7 @@ export default function RepositoryItem({
     forks,
     watchers
   } = data;
-  //#region tarefa
+  //#region tarefa "criar icone para favoritar"
   const props = isFavorite ? { solid: true } : {};
   //#endregion
 
@@ -44,7 +46,7 @@ export default function RepositoryItem({
           <ButtonText>{open_issues_count}</ButtonText>
         </Button>
         {
-          //#region tarefa
+          //#region tarefa "criar icone para favoritar" e "favoritar os repositórios"
           (<Button onPress={() => onHandlerFavorite(id)} >
             <FontAwesome name="star" {...props} size={16} color="#333" />
           </Button>)

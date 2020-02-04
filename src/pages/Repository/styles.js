@@ -28,7 +28,7 @@ export const List = styled.View`
   margin-top: 16px;
 `;
 
-//#region tarefa
+//#region tarefa loading
 export const LoadingContainer = styled.View`
   padding: 15px;
   align-items: center;
